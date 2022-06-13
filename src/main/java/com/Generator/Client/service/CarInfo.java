@@ -1,36 +1,36 @@
 package com.Generator.Client.service;
 
-import org.springframework.data.annotation.Id;
-//import javax.persistence.GeneratedValue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class CarInfo {
 
-    private int id;
+    private long id;
+    private int numbCar;
     private int speed;
     private CoordInfo coord;
-
-    private List lis = new ArrayList<>();
-
 
     public CarInfo() {
 
     }
 
-    public CarInfo(int id, int speed, CoordInfo coord) {
-        this.id = id;
+    public CarInfo(int numbCar, int speed, CoordInfo coord) {
+        this.numbCar = numbCar;
         this.speed = speed;
         this.coord = coord;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public int getNumbCar() {
+        return numbCar;
+    }
+
+    public void setNumbCar(int numbCar) {
+        this.numbCar = numbCar;
     }
 
     public int getSpeed() {

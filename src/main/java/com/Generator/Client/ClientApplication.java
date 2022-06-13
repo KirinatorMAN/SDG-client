@@ -27,13 +27,13 @@ public class ClientApplication {
 
 
 
-		System.out.println("Blocked url add");
+		System.out.println("Car info add");
 		siteService.findAllBlockedSites1();
 //		for (int i = 0; i < 3; ++i) {
-			System.out.println("Blocked urls:");
-			siteService.findAllBlockedSites().forEach(site -> System.out.println(site.getUrl()));
-
-			Thread.sleep(5000);
+//			System.out.println("Cars:");
+//			siteService.findAllBlockedSites().forEach(site -> System.out.println(site.getNumbCar()));
+//
+//			Thread.sleep(5000);
 //		}
 
 	}
