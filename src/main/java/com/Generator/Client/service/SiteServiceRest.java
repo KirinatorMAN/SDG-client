@@ -31,13 +31,14 @@ public class SiteServiceRest implements SiteService {
     public void findAllBlockedSites1() {
 
 //   Сделал просто для того что бы что то хоть было, в дальнейшем переедет в класс
-        CarInfo newSiteInfo = new CarInfo(3,70,new CoordInfo(25,64));
+        CarInfo newSiteInfo = new CarInfo(3);
 
-
+//  Начало цикла в рамках одной машины
         CarInfo createdSite = restTemplate.postForObject(serverUrl + "/",
                 newSiteInfo,
                 CarInfo.class
         );
+//  Конец цикла в рамках одной машины
     }
     @Override
     public List<CarInfo> findAllBlockedSites() {
