@@ -1,5 +1,6 @@
 package com.Generator.Client.service;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Random;
@@ -8,7 +9,7 @@ public class CarInfo {
 
     private long id;
     private int numbCar;
-    private double speed;
+    private float speed;
     private CoordInfo coord;
 
     public CarInfo() {
@@ -17,7 +18,7 @@ public class CarInfo {
 
     public CarInfo(int numbCar) {
         this.numbCar = numbCar;
-        this.speed = (random(17)+1)*3.6;
+        this.speed = (Float)((random(17)+1)*36f)/10f;
         this.coord = new CoordInfo();
     }
 
@@ -26,63 +27,67 @@ public class CarInfo {
         return rnd.nextInt(num);
     }
 
-    @Scheduled(fixedRate = 1000)
-    private void Drive(){
+//    @Scheduled(fixedRate = 1000)
+    public void Drive(){
+        System.out.println("ChangeParam");
+        int speedInt = (int) (this.speed*10);
         int a = this.random(100);
-        if ((this.speed/3.6>=17)&&(this.speed/3.6<5)) {
-            switch (Double.toString(this.speed)) {
+        if ((speedInt/36<=17)&&(speedInt/36>5)) {
+            switch (speedInt) {
 //          17 м/с
-                case ("61.2"):
+                case (612):
 //          16 м/с
-                case ("57.6"):
+                case (576):
                     if (a < 55) {           // 55%-Без изменения скорости
-                        move(this.speed / 3.6);
+                        move(speedInt / 36);
                     } else{    // 45%-Замедление
-                        move(this.speed / 3.6 - 3);
-                        this.speed -= 3*3.6;
+                        move(speedInt / 36 - 3);
+                        this.speed = (float)(speedInt - 3 * 36)/10;
                     }
                     break;
                 default:
                     if (a < 40) {           // 40%-Без изменения скорости
-                        move(this.speed / 3.6);
+                        move(speedInt / 36);
                     } else if (a < 70) {    // 30%-Ускорение
-                        move(this.speed / 3.6 + 2);
-                        this.speed += 2*3.6;
+//                        S=v0*t+(a*t^2)/2
+                        move(speedInt / 36 + 2);
+                        this.speed = (float)(speedInt + 2 * 36)/10;
                     } else {                   // 30%-Замедление
-                        move(this.speed / 3.6 - 3);
-                        this.speed -= 3*3.6;
+                        move(speedInt / 36 - 3);
+                        this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
         }else {
-            switch (Double.toString(this.speed)) {
+            switch (speedInt) {
 //          1 м/с
-                case ("3.6"):
+                case (36):
 //          2 м/с
-                case ("7.2"):
+                case (72):
 //          3 м/с
-                case ("10.8"):
+                case (108):
                     if (a < 55) {           // 55%-Без изменения скорости
-                        move(this.speed / 3.6);
+                        move(speedInt / 36);
                     } else {                 // 45%-Ускорение
-                        move(this.speed / 3.6 + 2);
-                        this.speed += 2*3.6;
+                        move(speedInt / 36 + 2);
+                        this.speed = (float)(speedInt + 2 * 36)/10;
                     }
                     break;
                 default:
                     if (a < 45) {           // 45%-Без изменения скорости
-                        move(this.speed / 3.6);
+                        move(speedInt / 36);
                     } else if (a < 80) {    // 35%-Ускорение
-                        move(this.speed / 3.6 + 2);
-                        this.speed += 2*3.6;
+                        move(speedInt / 36 + 2);
+                        this.speed = (float)(speedInt + 2 * 36)/10;
                     } else {                  // 20%-Замедление
-                        move(this.speed / 3.6 - 3);
-                        this.speed -= 3*3.6;
+                        move(speedInt / 36 - 3);
+                        this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
         }
     }
-    public void move(double meter){
-        if ((this.speed/3.6>=17)&&(this.speed/3.6<9)){
+    public void move(int meter){
+        int speedInt = (int) (this.speed*10);
+        if ((speedInt/36<=17)&&(speedInt/36>9)){
             moveForward(meter);
         }else{
             int b = this.random(100);
@@ -94,7 +99,7 @@ public class CarInfo {
                 moveRight(meter);       // 10%-Поворот вправо
         }
     }
-    public void moveForward(double meter){
+    public void moveForward(int meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepUp(meter);
@@ -116,7 +121,7 @@ public class CarInfo {
         }
     }
 
-    public void moveLeft(double meter){
+    public void moveLeft(int meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepLeft(meter);
@@ -138,7 +143,7 @@ public class CarInfo {
         }
     }
 
-    public void moveRight(double meter){
+    public void moveRight(int meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepRight(meter);
@@ -160,7 +165,7 @@ public class CarInfo {
         }
     }
 
-    public void firstStep(double meter){
+    public void firstStep(int meter){
         int c = this.random(100);
         if (c < 25)
             this.coord.stepUp(meter);

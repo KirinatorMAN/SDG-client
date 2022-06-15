@@ -5,6 +5,6 @@ import java.util.List;
 public interface SiteService {
 
     List<CarInfo> findAllBlockedSites();
-    void findAllBlockedSites1();
+    void SendCarInfo();
 
 }

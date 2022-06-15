@@ -11,9 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.TimerTask;
 
-//@EnableRetry
-//@EnableCaching
-//@EnableHystrix
 @SpringBootApplication
 @EnableScheduling
 public class ClientApplication {
@@ -21,19 +18,12 @@ public class ClientApplication {
 	public static void main(String[] args) throws InterruptedException {
 
 		ApplicationContext ctx = SpringApplication.run(ClientApplication.class, args);
-		SiteService siteService = ctx.getBean(SiteService.class);
-
-//		for (int i = 0; i < 3; ++i) {
-//			System.out.println("Blocked urls:");
-//			siteService.findAllBlockedSites();
-//
-//			Thread.sleep(5000);
-//		}
 
 
+			SiteService siteService = ctx.getBean(SiteService.class);
 
-		System.out.println("Car info add");
-		siteService.findAllBlockedSites1();
+			System.out.println("Car info add");
+			siteService.SendCarInfo();
 
 
 
@@ -45,4 +35,5 @@ public class ClientApplication {
 //		}
 
 	}
+
 }

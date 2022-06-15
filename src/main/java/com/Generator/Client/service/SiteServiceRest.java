@@ -6,6 +6,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 //import org.springframework.retry.annotation.Backoff;
 //import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,16 +28,16 @@ public class SiteServiceRest implements SiteService {
         this.restTemplate = restTemplate;
         this.serverUrl = serverUrl;
     }
+    CarInfo newCarInfo = new CarInfo(3);
 
     @Override
-    public void findAllBlockedSites1() {
-
-//   Сделал просто для того что бы что то хоть было, в дальнейшем переедет в класс
-        CarInfo newSiteInfo = new CarInfo(3);
-
+    @Scheduled(fixedRate = 1000)
+    public void SendCarInfo() {
+        System.out.println("StartSend");
 //  Начало цикла в рамках одной машины
-        CarInfo createdSite = restTemplate.postForObject(serverUrl + "/",
-                newSiteInfo,
+        newCarInfo.Drive();
+        CarInfo createdSite = restTemplate.postForObject(serverUrl,
+                newCarInfo,
                 CarInfo.class
         );
 //  Конец цикла в рамках одной машины
