@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface SiteService {
 
-    List<SiteInfo> findAllBlockedSites();
-    void findAllBlockedSites1();
+    List<CarInfo> findAllBlockedSites();
+    void SendCarInfo();
 
 }

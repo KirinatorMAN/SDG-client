@@ -7,34 +7,33 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 //import org.springframework.retry.annotation.EnableRetry;
 import com.Generator.Client.service.SiteService;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-//@EnableRetry
-//@EnableCaching
-//@EnableHystrix
+import java.util.TimerTask;
+
 @SpringBootApplication
+@EnableScheduling
 public class ClientApplication {
 
 	public static void main(String[] args) throws InterruptedException {
+
 		ApplicationContext ctx = SpringApplication.run(ClientApplication.class, args);
-		SiteService siteService = ctx.getBean(SiteService.class);
+
+
+			SiteService siteService = ctx.getBean(SiteService.class);
+
+			System.out.println("Car info add");
+			siteService.SendCarInfo();
+
+
 
 //		for (int i = 0; i < 3; ++i) {
-//			System.out.println("Blocked urls:");
-//			siteService.findAllBlockedSites();
+//			System.out.println("Cars:");
+//			siteService.findAllBlockedSites().forEach(site -> System.out.println(site.getNumbCar()));
 //
 //			Thread.sleep(5000);
 //		}
 
-
-
-		System.out.println("Blocked url add");
-		siteService.findAllBlockedSites1();
-//		for (int i = 0; i < 3; ++i) {
-			System.out.println("Blocked urls:");
-			siteService.findAllBlockedSites().forEach(site -> System.out.println(site.getUrl()));
-
-			Thread.sleep(5000);
-//		}
-
 	}
+
 }

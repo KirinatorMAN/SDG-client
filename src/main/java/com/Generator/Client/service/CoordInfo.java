@@ -1,34 +1,87 @@
 package com.Generator.Client.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Random;
+
 public class CoordInfo {
 
-    private float coordX;
-    private float coordY;
+    private BigDecimal Clat;
+    private BigDecimal Clong;
 
+    private String orientation = "None";
     public CoordInfo() {
+        this.Clat = BigDecimal.valueOf(55).add(BigDecimal.valueOf(random(706220, 793189)).divide(BigDecimal.valueOf(10).pow(6)));
+//        this.Clat =  55+random(706220, 793189)*Math.pow(10,-6);
 
+        this.Clong = BigDecimal.valueOf(55).add(BigDecimal.valueOf(random(532040, 746289)).divide(BigDecimal.valueOf(10).pow(6)));
+//        this.Clong = 55+random(532040, 746289)*Math.pow(10,-6);
     }
 
-    public CoordInfo(float coordX,float coordY) {
-        this.coordX=coordX;
-        this.coordY=coordY;
-
+    public Integer random(int min, int max){
+        Random rnd = new Random();
+        return rnd.nextInt(max - min) + min;
     }
 
-    public float getCoordX() {
-        return coordX;
+    public void stepUp(int meter){
+        this.Clat = this.Clat.add(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6);
+
+//        int ClatInt = (int) Math.floor(this.Clat*Math.pow(10,6));
+//        this.Clat = (ClatInt + meter*9)/Math.pow(10,6);
+        this.orientation="North";
     }
 
-    public void setCoordX(float coordX) {
-        this.coordX = coordX;
+    public void stepDown(int meter){
+        this.Clat = this.Clat.subtract(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6);
+
+//        int ClatInt = (int) Math.floor(this.Clat*Math.pow(10,6));
+//        this.Clat = (ClatInt - meter*9)/Math.pow(10,6);
+        this.orientation="South";
     }
 
-    public float getCoordY() {
-        return coordY;
+    public void stepRight(int meter){
+//        40075000/(360*60*60)=30.922
+//      0.000278/30.922=0.000009
+        this.Clong = this.Clong.add(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009)).multiply(BigDecimal.valueOf(Math.cos(this.Clat.doubleValue())))).setScale(6, RoundingMode.HALF_UP);
+
+//        this.Clong+=meter*278/(30.922*Math.cos(this.Clat))/Math.pow(10,6);
+//        double scale = Math.pow(10, 2);
+//        this.Clong+=meter*Math.ceil(278/(30.922*Math.cos(this.Clat.doubleValue()))*scale)/Math.pow(10,8);
+        this.orientation="East";
+    }
+    public void stepLeft(int meter){
+        this.Clong = this.Clong.subtract(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009)).multiply(BigDecimal.valueOf(Math.cos(this.Clat.doubleValue())))).setScale(6, RoundingMode.HALF_UP);
+
+//        this.Clong-=(meter*278/(30.922*Math.cos(this.Clat)))/Math.pow(10,6);
+//        double scale = Math.pow(10, 2);
+//        this.Clong+=meter*Math.ceil(278/(30.922*Math.cos(this.Clat.doubleValue()))*scale)/Math.pow(10,8);
+        this.orientation="West";
     }
 
-    public void setCoordY(float coordY) {
-        this.coordY = coordY;
+
+
+    public BigDecimal getClat() {
+        return Clat;
+    }
+
+    public void setClat(float Clat) {
+        this.Clat = BigDecimal.valueOf(Clat);
+    }
+
+    public BigDecimal getClong() {
+        return Clong;
+    }
+
+    public void setClong(float Clong) {
+        this.Clong = BigDecimal.valueOf(Clong);
+    }
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
     }
 
 
