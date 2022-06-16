@@ -15,7 +15,7 @@ public class ClientApplication {
 	public static void main(String[] args) {
 
 		ApplicationContext ctx = SpringApplication.run(ClientApplication.class, args);
-		Multithreading multithreading = new Multithreading(ctx);
+		Multithreading multithreading = new Multithreading(ctx,Integer.parseInt(args[0]));
 		multithreading.run();
 	}
 	@Bean
