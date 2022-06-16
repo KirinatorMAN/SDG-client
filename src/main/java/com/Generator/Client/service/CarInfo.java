@@ -1,8 +1,5 @@
 package com.Generator.Client.service;
 
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
-
 import java.util.Random;
 
 public class CarInfo {
@@ -18,7 +15,7 @@ public class CarInfo {
 
     public CarInfo(int numbCar) {
         this.numbCar = numbCar;
-        this.speed = (Float)((random(17)+1)*36f)/10f;
+        this.speed = (random(17)+1)*36f/10f;
         this.coord = new CoordInfo();
     }
 
@@ -27,7 +24,6 @@ public class CarInfo {
         return rnd.nextInt(num);
     }
 
-//    @Scheduled(fixedRate = 1000)
     public void Drive(){
         System.out.println("ChangeParam");
         int speedInt = (int) (this.speed*10);
@@ -39,21 +35,21 @@ public class CarInfo {
 //          16 м/с
                 case (576):
                     if (a < 55) {           // 55%-Без изменения скорости
-                        move(speedInt / 36);
-                    } else{    // 45%-Замедление
-                        move(speedInt / 36 - 3);
+                        move(speedInt / 36f);
+                    } else{                 // 45%-Замедление
+//                                          S=v0*t+(a*t^2)/2
+                        move(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
                     break;
                 default:
                     if (a < 40) {           // 40%-Без изменения скорости
-                        move(speedInt / 36);
+                        move(speedInt / 36f);
                     } else if (a < 70) {    // 30%-Ускорение
-//                        S=v0*t+(a*t^2)/2
-                        move(speedInt / 36 + 2);
+                        move(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
-                    } else {                   // 30%-Замедление
-                        move(speedInt / 36 - 3);
+                    } else {                // 30%-Замедление
+                        move(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
@@ -66,26 +62,26 @@ public class CarInfo {
 //          3 м/с
                 case (108):
                     if (a < 55) {           // 55%-Без изменения скорости
-                        move(speedInt / 36);
-                    } else {                 // 45%-Ускорение
-                        move(speedInt / 36 + 2);
+                        move(speedInt / 36f);
+                    } else {                // 45%-Ускорение
+                        move(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
                     }
                     break;
                 default:
                     if (a < 45) {           // 45%-Без изменения скорости
-                        move(speedInt / 36);
+                        move(speedInt / 36f);
                     } else if (a < 80) {    // 35%-Ускорение
-                        move(speedInt / 36 + 2);
+                        move(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
-                    } else {                  // 20%-Замедление
-                        move(speedInt / 36 - 3);
+                    } else {                // 20%-Замедление
+                        move(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
         }
     }
-    public void move(int meter){
+    public void move(float meter){
         int speedInt = (int) (this.speed*10);
         if ((speedInt/36<=17)&&(speedInt/36>9)){
             moveForward(meter);
@@ -99,7 +95,7 @@ public class CarInfo {
                 moveRight(meter);       // 10%-Поворот вправо
         }
     }
-    public void moveForward(int meter){
+    public void moveForward(float meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepUp(meter);
@@ -121,7 +117,7 @@ public class CarInfo {
         }
     }
 
-    public void moveLeft(int meter){
+    public void moveLeft(float meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepLeft(meter);
@@ -143,7 +139,7 @@ public class CarInfo {
         }
     }
 
-    public void moveRight(int meter){
+    public void moveRight(float meter){
         switch (this.coord.getOrientation()){
             case ("North"):
                 this.coord.stepRight(meter);
@@ -165,7 +161,7 @@ public class CarInfo {
         }
     }
 
-    public void firstStep(int meter){
+    public void firstStep(float meter){
         int c = this.random(100);
         if (c < 25)
             this.coord.stepUp(meter);
