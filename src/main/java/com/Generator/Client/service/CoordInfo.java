@@ -12,10 +12,8 @@ public class CoordInfo {
     private String orientation = "None";
     public CoordInfo() {
         this.Clat = BigDecimal.valueOf(55).add(BigDecimal.valueOf(random(706220, 793189)).divide(BigDecimal.valueOf(10).pow(6)));
-//        this.Clat =  55+random(706220, 793189)*Math.pow(10,-6);
 
         this.Clong = BigDecimal.valueOf(55).add(BigDecimal.valueOf(random(532040, 746289)).divide(BigDecimal.valueOf(10).pow(6)));
-//        this.Clong = 55+random(532040, 746289)*Math.pow(10,-6);
     }
 
     public Integer random(int min, int max){
@@ -23,38 +21,28 @@ public class CoordInfo {
         return rnd.nextInt(max - min) + min;
     }
 
-    public void stepUp(int meter){
-        this.Clat = this.Clat.add(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6);
+    public void stepUp(float meter){
+        this.Clat = this.Clat.add(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6,RoundingMode.HALF_UP);
 
-//        int ClatInt = (int) Math.floor(this.Clat*Math.pow(10,6));
-//        this.Clat = (ClatInt + meter*9)/Math.pow(10,6);
         this.orientation="North";
     }
 
-    public void stepDown(int meter){
-        this.Clat = this.Clat.subtract(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6);
+    public void stepDown(float meter){
+        this.Clat = this.Clat.subtract(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009))).setScale(6,RoundingMode.HALF_UP);
 
-//        int ClatInt = (int) Math.floor(this.Clat*Math.pow(10,6));
-//        this.Clat = (ClatInt - meter*9)/Math.pow(10,6);
         this.orientation="South";
     }
 
-    public void stepRight(int meter){
+    public void stepRight(float meter){
 //        40075000/(360*60*60)=30.922
 //      0.000278/30.922=0.000009
         this.Clong = this.Clong.add(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009)).multiply(BigDecimal.valueOf(Math.cos(this.Clat.doubleValue())))).setScale(6, RoundingMode.HALF_UP);
 
-//        this.Clong+=meter*278/(30.922*Math.cos(this.Clat))/Math.pow(10,6);
-//        double scale = Math.pow(10, 2);
-//        this.Clong+=meter*Math.ceil(278/(30.922*Math.cos(this.Clat.doubleValue()))*scale)/Math.pow(10,8);
         this.orientation="East";
     }
-    public void stepLeft(int meter){
+    public void stepLeft(float meter){
         this.Clong = this.Clong.subtract(BigDecimal.valueOf(meter).multiply(BigDecimal.valueOf(0.000009)).multiply(BigDecimal.valueOf(Math.cos(this.Clat.doubleValue())))).setScale(6, RoundingMode.HALF_UP);
 
-//        this.Clong-=(meter*278/(30.922*Math.cos(this.Clat)))/Math.pow(10,6);
-//        double scale = Math.pow(10, 2);
-//        this.Clong+=meter*Math.ceil(278/(30.922*Math.cos(this.Clat.doubleValue()))*scale)/Math.pow(10,8);
         this.orientation="West";
     }
 
