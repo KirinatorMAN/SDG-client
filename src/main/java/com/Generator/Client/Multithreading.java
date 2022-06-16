@@ -12,8 +12,8 @@ public class Multithreading {
     public static Vector<CarInfo> v = new Vector<>();
     private final ApplicationContext ctx;
 
-    public Multithreading(ApplicationContext ctx) {
-        for (int i = 0; i < 2; ++i) {
+    public Multithreading(ApplicationContext ctx,int quantity) {
+        for (int i = 0; i < quantity; ++i) {
             v.add(new CarInfo(i));
         }
         this.ctx = ctx;
