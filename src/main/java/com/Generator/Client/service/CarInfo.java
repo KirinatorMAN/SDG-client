@@ -28,17 +28,17 @@ public class CarInfo {
         System.out.println("ChangeParam");
         int speedInt = (int) (this.speed*10);
         int a = this.random(100);
-        if ((speedInt/36<=17)&&(speedInt/36>5)) {
+        if ((speedInt/36<=17)&&(speedInt/36>6)) {
             switch (speedInt) {
 //          17 м/с
                 case (612):
 //          16 м/с
                 case (576):
                     if (a < 55) {           // 55%-Без изменения скорости
-                        move(speedInt / 36f);
+                        moveForward(speedInt / 36f);
                     } else{                 // 45%-Замедление
 //                                          S=v0*t+(a*t^2)/2
-                        move(speedInt / 36f - 1.5f);
+                        moveForward(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
                     break;
@@ -46,10 +46,10 @@ public class CarInfo {
                     if (a < 40) {           // 40%-Без изменения скорости
                         move(speedInt / 36f);
                     } else if (a < 70) {    // 30%-Ускорение
-                        move(speedInt / 36f + 1);
+                        moveForward(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
                     } else {                // 30%-Замедление
-                        move(speedInt / 36f - 1.5f);
+                        moveForward(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
@@ -64,7 +64,7 @@ public class CarInfo {
                     if (a < 55) {           // 55%-Без изменения скорости
                         move(speedInt / 36f);
                     } else {                // 45%-Ускорение
-                        move(speedInt / 36f + 1);
+                        moveForward(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
                     }
                     break;
@@ -72,10 +72,10 @@ public class CarInfo {
                     if (a < 45) {           // 45%-Без изменения скорости
                         move(speedInt / 36f);
                     } else if (a < 80) {    // 35%-Ускорение
-                        move(speedInt / 36f + 1);
+                        moveForward(speedInt / 36f + 1);
                         this.speed = (float)(speedInt + 2 * 36)/10;
                     } else {                // 20%-Замедление
-                        move(speedInt / 36f - 1.5f);
+                        moveForward(speedInt / 36f - 1.5f);
                         this.speed = (float)(speedInt - 3 * 36)/10;
                     }
             }
@@ -83,9 +83,9 @@ public class CarInfo {
     }
     public void move(float meter){
         int speedInt = (int) (this.speed*10);
-        if ((speedInt/36<=17)&&(speedInt/36>9)){
+        if ((speedInt/36<=17)&&(speedInt/36>9)||(speedInt/36<3))
             moveForward(meter);
-        }else{
+        else {
             int b = this.random(100);
             if (b < 80)
                 moveForward(meter);     // 80%-Движение прямо
