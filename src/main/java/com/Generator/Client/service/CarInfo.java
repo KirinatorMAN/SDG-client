@@ -83,9 +83,7 @@ public class CarInfo {
     }
     public void move(float meter){
         int speedInt = (int) (this.speed*10);
-        if ((speedInt/36<=17)&&(speedInt/36>9)||(speedInt/36<3))
-            moveForward(meter);
-        else {
+        if ((speedInt/36<=9)&&(speedInt/36>=3)) {
             int b = this.random(100);
             if (b < 80)
                 moveForward(meter);     // 80%-Движение прямо
@@ -94,6 +92,8 @@ public class CarInfo {
             else
                 moveRight(meter);       // 10%-Поворот вправо
         }
+        else
+            moveForward(meter);
     }
     public void moveForward(float meter){
         switch (this.coord.getOrientation()){
