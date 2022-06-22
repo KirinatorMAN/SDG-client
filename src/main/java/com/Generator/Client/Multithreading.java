@@ -3,13 +3,11 @@ package com.Generator.Client;
 import com.Generator.Client.service.CarInfo;
 import com.Generator.Client.service.CarService;
 import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-
 import java.util.Vector;
-@EnableScheduling
+
 public class Multithreading {
     public static Vector<CarInfo> v = new Vector<>();
+    private final Vector<MyThread> thre = new Vector<>();
     private final ApplicationContext ctx;
 
     public Multithreading(ApplicationContext ctx,int quantity) {
@@ -18,12 +16,12 @@ public class Multithreading {
         }
         this.ctx = ctx;
     }
-
     public void run() {
-        Vector<MyThread> the = new Vector<>();
         for (int i = 0; i < v.size(); ++i) {
-            the.addElement(new MyThread(i, ctx.getBean(CarService.class)));
-            the.get(i).start();
+            MyThread element;
+            Runtime.getRuntime().addShutdownHook(element = new MyThread(i, ctx.getBean(CarService.class)));
+            thre.addElement(element);
+            thre.get(i).start();
         }
     }
 }
@@ -35,20 +33,16 @@ class MyThread extends Thread {
         this.index = index;
         this.service = service;
     }
-    @Scheduled(fixedRate = 1000)
-    public void startThread() throws InterruptedException {
-        while (true){
-            service.SendCarInfo(index);
-            Thread.sleep(1000);
-        }
-    }
     @Override
     public void run()
     {
-        try {
-            startThread();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while (true) {
+            try {
+                service.SendCarInfo(index);
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
         }
     }
 }
