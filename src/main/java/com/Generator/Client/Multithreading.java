@@ -3,8 +3,8 @@ package com.Generator.Client;
 import com.Generator.Client.service.CarInfo;
 import com.Generator.Client.service.CarService;
 import org.springframework.context.ApplicationContext;
-
 import java.util.Vector;
+
 public class Multithreading {
     public static Vector<CarInfo> v = new Vector<>();
     private final Vector<MyThread> thre = new Vector<>();

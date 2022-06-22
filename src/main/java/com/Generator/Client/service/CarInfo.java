@@ -10,7 +10,6 @@ public class CarInfo {
     private CoordInfo coord;
 
     public CarInfo() {
-
     }
 
     public CarInfo(int numbCar) {

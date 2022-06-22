@@ -22,6 +22,5 @@ public class ClientApplication {
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
 	}
-
 }
 
